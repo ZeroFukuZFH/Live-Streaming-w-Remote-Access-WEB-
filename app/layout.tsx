@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import { Search } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +29,40 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <HomeHeader/>
+        <div className="flex flex-col justify-center items-center w-screen">
+          {children} 
+        </div>
       </body>
     </html>
   );
+}
+
+function HomeHeader(){
+  return (
+    <div className="flex flex-row h-15 bg-black w-screen items-center p-4 cursor-pointer justify-evenly">
+      <Link href={"/"} className="hover:text-red-600">AppHome</Link>
+      <Link href={"/shows"} className="hover:text-red-600">Shows</Link>
+      <Link href={"/movies"} className="hover:text-red-600">Movies</Link>
+      <SearchBar/>
+      <h1>set username</h1>
+      <input 
+        className="outline-none border p-1 border-white flex flex-row gap-2" 
+        placeholder="e.g jane doe"
+      />
+    </div>
+  )
+}
+
+function SearchBar(){
+  return (
+    <div className="border p-1 border-white flex flex-row gap-2">
+      <Search/>
+      <input
+        className="outline-none" 
+        placeholder="Titles, Peoples, Genre"
+      />
+    </div>
+    
+  )
 }

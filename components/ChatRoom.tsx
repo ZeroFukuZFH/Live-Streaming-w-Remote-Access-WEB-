@@ -3,6 +3,7 @@
 import { CornerDownLeft, User } from "lucide-react"
 import { useState, KeyboardEvent } from "react"
 
+
 export function ChatRoom(){ 
   return (
     <div className="bg-[rgb(255,255,255,0.15)] h-screen max-h-[600] max-w-80 flex flex-col rounded-xl p-2 pl-4 pr-4 backdrop-blur-xs border-red">

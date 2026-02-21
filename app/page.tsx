@@ -1,22 +1,27 @@
-import { ChatRoom } from "@/components/ChatRoom";
-import MemberDisplay from "@/components/MemberDisplay";
+"use client"
+
+import { useEffect } from "react"
 
 export default function Home() {
+  const getMoviesList = async () => {
+    const popular = await fetch("https://api.themoviedb.org/3/movie/popular")
+    const topRated = await fetch("https://api.themoviedb.org/3/movie/top_rated")
+    const upcoming = await fetch("https://api.themoviedb.org/3/movie/upcoming")
+    console.log(popular.body)
+    return {popular, topRated, upcoming}
+  }
+  useEffect(()=>{
+    const url = 'https://api.themoviedb.org/3/authentication';
+    const options = {method: 'GET', headers: {accept: 'application/json'}};
+
+    fetch(url, options)
+      .then(res => res.json())
+      .then(json => console.log(json))
+      .catch(err => console.error(err));
+  },[])
   return (
-    <div className="flex flex-col justify-center items-center w-screen">
-    <div className="flex flex-row h-15"></div>
-     <div className="flex flex-row w-screen max-w-7xl h-screen max-h-[660]">
-        <div className="p-6 w-full h-full flex flex-row gap-4">
-        
-          <iframe 
-            src="https://www.vidking.net/embed/tv/119051/1/8?color=e50914&autoPlay=true&nextEpisode=true&episodeSelector=true" width="100%" height="600" allowFullScreen
-            sandbox="allow-forms allow-scripts allow-same-origin"
-          /> 
-          <ChatRoom/>    
-        </div>
+    <div className="">
       
-      </div>
-      <MemberDisplay/>
     </div>
   );
 }
