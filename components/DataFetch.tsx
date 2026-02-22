@@ -39,7 +39,7 @@ export const movieTypes = {
     UPCOMING : "https://api.themoviedb.org/3/movie/upcoming"
 }
 
-const apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMDVkY2E2NjMxYzY2NmViOTc3OTQ4Nzc1YjU1MGJiOSIsIm5iZiI6MTc3MTY3NjEyOS4wLCJzdWIiOiI2OTk5YTFlMDE2OGYyMTA0NmU1OTAyYzUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.o4QG7qDx1_z13eitS_978rOzm0QGZv258MN2KJlNm3k" 
+const apiKey = process.env.API_KEY
 const options = {
         method:'GET',
         headers: {

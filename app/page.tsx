@@ -47,7 +47,7 @@ export default function Home() {
       ))}
       </div>
       <h1>Upcoming</h1>
-      <div className="flex flex-row overflow-x-scroll">
+      <div className="flex flex-row overflow-x-scroll gap-2">
       {upcoming?.results.map(movie => (
         <div key={movie.id} className="w-54">
           <MovieCard
