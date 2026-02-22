@@ -1,28 +1,69 @@
 "use client"
 
-import { useEffect } from "react"
+import { MovieCard } from "@/components/MovieCard";
+import { DetailProps, MovieResponse, movieTypes, useDetails, useMovies } from "@/components/DataFetch";
 
 export default function Home() {
-  const getMoviesList = async () => {
-    const popular = await fetch("https://api.themoviedb.org/3/movie/popular")
-    const topRated = await fetch("https://api.themoviedb.org/3/movie/top_rated")
-    const upcoming = await fetch("https://api.themoviedb.org/3/movie/upcoming")
-    console.log(popular.body)
-    return {popular, topRated, upcoming}
-  }
-  useEffect(()=>{
-    const url = 'https://api.themoviedb.org/3/authentication';
-    const options = {method: 'GET', headers: {accept: 'application/json'}};
+  const details : DetailProps | null = useDetails()
+  const popular : MovieResponse | null = useMovies(movieTypes.POPULAR)
+  const topRated : MovieResponse | null = useMovies(movieTypes.TOPRATED)
+  const upcoming : MovieResponse | null = useMovies(movieTypes.UPCOMING)
 
-    fetch(url, options)
-      .then(res => res.json())
-      .then(json => console.log(json))
-      .catch(err => console.error(err));
-  },[])
+  const size = details?.images.poster_sizes[3] || 'w342'
+  const base_url = details?.images.base_url || 'https://image.tmdb.org/t/p/'
+
+
   return (
-    <div className="">
+    
+      <div className="text-white max-w-screen">
+      <h1>Popular</h1>
+      <div className="flex flex-row overflow-x-scroll">
+      {popular?.results.map(movie => (
+        <div key={movie.id} className="w-54">
+          <MovieCard
+            id={movie.id}
+            title={movie.title} 
+            poster_path={base_url + size + movie.poster_path}
+            overview={movie.overview}
+            release_date={movie.release_date}
+            vote_average={movie.vote_average}
+          />
+        </div>
+      ))}
+      </div>
+      <h1>Top rated</h1>
+      <div className="flex flex-row overflow-x-scroll">
+      {topRated?.results.map(movie => (
+        <div key={movie.id} className="w-54">
+          <MovieCard
+            id={movie.id}
+            title={movie.title} 
+            poster_path={base_url + size + movie.poster_path}
+            overview={movie.overview}
+            release_date={movie.release_date}
+            vote_average={movie.vote_average}
+          />
+        </div>
+      ))}
+      </div>
+      <h1>Upcoming</h1>
+      <div className="flex flex-row overflow-x-scroll">
+      {upcoming?.results.map(movie => (
+        <div key={movie.id} className="w-54">
+          <MovieCard
+            id={movie.id}
+            title={movie.title} 
+            poster_path={base_url + size + movie.poster_path}
+            overview={movie.overview}
+            release_date={movie.release_date}
+            vote_average={movie.vote_average}
+          />
+        </div>
+      ))}
+      </div>
       
     </div>
+    
   );
 }
 
