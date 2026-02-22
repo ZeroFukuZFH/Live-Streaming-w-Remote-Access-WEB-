@@ -3,7 +3,7 @@
 // USE THE GLOBAL HOOK INSTEAD
 "use client"
 
-import { createContext, Dispatch, SetStateAction, useState, useEffect } from "react";
+import { createContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
 
 interface MovieLinkProps {
     link : string,
