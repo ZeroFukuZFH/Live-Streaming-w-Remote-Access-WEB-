@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft, Copy, Settings, UserPlus } from "lucide-react"
+import { ArrowLeft, Settings, UserPlus } from "lucide-react"
 import { useState, useContext } from 'react';
 import { CurrentMemberContext, MaxMemberContext, PopUpBoxContext } from "./MemberDisplayProviders";
 
@@ -25,22 +25,12 @@ export default function MemberDisplay(){
     )
 }
 
-const sampleMembers = [
-    {
-        userId : 2347623784682,
-        name : "Jao"
-    },
+interface MemberProps {
+    id : number,
+    name : string
+}
 
-    {
-        userId : 234763929682,
-        name : "Albert"
-    },
-
-    {
-        userId : 23476237342,
-        name : "BumBum"
-    },
-]
+const sampleMembers : MemberProps[] = []
 
 function WatchPartyHeader(){
     const { currentMemberCount, setCurrentMemberCount } = useContext(CurrentMemberContext)
@@ -68,7 +58,7 @@ function WatchPartyBody(){
     return (
         <div>   
             {sampleMembers.map(users => (
-                <div key={users.userId}>{users.name}</div>
+                <div key={users.id}>{users.name}</div>
             ))}
         </div>
     )

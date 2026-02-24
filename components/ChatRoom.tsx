@@ -18,19 +18,13 @@ const sampleClient = {
     name:"Richie"
 };
 
-const sampleChats = [
-  {
-    chatID:216739126371,
-    name:"Jao",
-    message:"i hate clankers"
-    
-  },
-  {
-    chatID:216723672736,
-    name:"Richie",
-    message:"i love clankers"
-  },
-]
+interface ChatProps {
+  id : number,
+  name : string, 
+  message : string
+}
+
+const sampleChats : ChatProps[] = []
 
 function ChatHeader() {
   const [members, setMembers] = useState(0);
@@ -49,7 +43,7 @@ function ChatArea(){
   return (
     <div className="border-t border-b pt-2 pb-2 h-full">
       {sampleChats.map(user => (
-        <div key={user.chatID}>
+        <div key={user.id}>
           {
             user.name == sampleClient.name ? 
             <div className="flex flex-col items-end">
