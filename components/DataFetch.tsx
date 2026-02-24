@@ -40,7 +40,7 @@ export const movieTypes = {
     UPCOMING : "https://api.themoviedb.org/3/movie/upcoming"
 }
 
-export const apiKey = process.env.API_KEY
+export const apiKey = process.env.NEXT_PUBLIC_API_KEY
 export const options = {
         method:'GET',
         headers: {
