@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 const env = dotenv.parse(fs.readFileSync('.env'))
 
 const nextConfig: NextConfig = {
-  output: "export",
   images: {
     unoptimized: true
   },

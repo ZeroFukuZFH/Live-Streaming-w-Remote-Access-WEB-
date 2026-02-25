@@ -1,16 +1,18 @@
 "use client"
 
-import { MovieCard } from "@/components/MovieCard";
-import { DetailProps, MovieResponse, movieTypes, useDetails, useMovies } from "@/components/DataFetch";
+import { WatchCard } from "@/components/WatchCard";
+import { MovieResponse,useMovieList,movieTypes } from "@/components/custom hooks/useMovies";
+import { DetailProps, useDetails } from "@/components/custom hooks/useDetails";
 import { HomeHeader } from "@/components/AppHeader";
-import { SearchBar } from '../components/SearchBar';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 export default function Home() {
-  const details: DetailProps | null = useDetails()
-  const popular: MovieResponse | null = useMovies(movieTypes.POPULAR)
-  const topRated: MovieResponse | null = useMovies(movieTypes.TOPRATED)
-  const upcoming: MovieResponse | null = useMovies(movieTypes.UPCOMING)
+  
+  const popular: MovieResponse | null = useMovieList(movieTypes.POPULAR)
+  const topRated: MovieResponse | null = useMovieList(movieTypes.TOPRATED)
+  const upcoming: MovieResponse | null = useMovieList(movieTypes.UPCOMING)
 
+  const details: DetailProps | null = useDetails()
   const size = details?.images.poster_sizes[3] || 'w342'
   const base_url = details?.images.base_url || 'https://image.tmdb.org/t/p/'
 
@@ -19,72 +21,70 @@ export default function Home() {
       <HomeHeader />
       
       <section className="max-w-7xl w-full px-4">
-        <div className="flex flex-col items-center justify-center text-center w-full mb-8">
-          <h1 className="text-4xl font-bold">WATCH PARTY</h1>
-          <h3 className="text-xl text-gray-400">fuck ads, free streaming site</h3>
-        </div>
-        
-        <div className="flex justify-center mb-8">
-          <div className="w-full max-w-md">
-            <SearchBar />
+        <div className="flex flex-col items-center justify-center text-center w-full h-[70vh] mb-8">
+          <div className="w-[30vw] flex flex-col gap-2">
+            <h1 className="text-4xl font-bold">WATCH PARTY</h1>
+            <h3 className="text-xl text-gray-400">fuck ads, free streaming site</h3>
           </div>
         </div>
-
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Popular</h1>
-          <div className="flex flex-row gap-4 overflow-x-scroll pb-4">
+      
+        <Carousel>
+          <CarouselContent>
             {popular?.results.map(movie => (
-              <div key={movie.id} className="shrink-0">
-                <MovieCard
+              <CarouselItem key={movie.id} className="basis-1/5">
+                <WatchCard
                   id={movie.id}
                   title={movie.title}
                   poster_path={base_url + size + movie.poster_path}
-                  overview={movie.overview}
                   release_date={movie.release_date}
                   vote_average={movie.vote_average}
                 />
-              </div>
+              </CarouselItem>
             ))}
-          </div>
-        </div>
+          </CarouselContent>
+          <CarouselPrevious/>
+          <CarouselNext/>
+        </Carousel>
 
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Top rated</h1>
-          <div className="flex flex-row gap-4 overflow-x-scroll pb-4">
+        <Carousel>
+          <CarouselContent>
             {topRated?.results.map(movie => (
-              <div key={movie.id} className="shrink-0">
-                <MovieCard
+              <CarouselItem key={movie.id} className="basis-1/5">
+                <WatchCard
                   id={movie.id}
                   title={movie.title}
                   poster_path={base_url + size + movie.poster_path}
-                  overview={movie.overview}
                   release_date={movie.release_date}
                   vote_average={movie.vote_average}
                 />
-              </div>
+              </CarouselItem>
             ))}
-          </div>
-        </div>
+          </CarouselContent>
+          <CarouselPrevious/>
+          <CarouselNext/>
+        </Carousel>
 
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold mb-4">Upcoming</h1>
-          <div className="flex flex-row gap-4 overflow-x-scroll pb-4">
+        <Carousel>
+          <CarouselContent>
             {upcoming?.results.map(movie => (
-              <div key={movie.id} className="shrink-0">
-                <MovieCard
+              <CarouselItem key={movie.id} className="basis-1/5">
+                <WatchCard
                   id={movie.id}
                   title={movie.title}
                   poster_path={base_url + size + movie.poster_path}
-                  overview={movie.overview}
                   release_date={movie.release_date}
                   vote_average={movie.vote_average}
                 />
-              </div>
+              </CarouselItem>
             ))}
-          </div>
-        </div>
+          </CarouselContent>
+          <CarouselPrevious/>
+          <CarouselNext/>
+        </Carousel>
+
       </section>
     </div>
   );
 }
+
 

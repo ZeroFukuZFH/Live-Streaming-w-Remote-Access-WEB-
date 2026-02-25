@@ -15,7 +15,7 @@ export default function Page() {
         <div className="p-6 w-full h-full flex flex-row gap-4">
         
           <iframe 
-            src={link} width="100%" height="600" allowFullScreen
+            src={link.length <= 0 ? undefined : link} width="100%" height="600" allowFullScreen
             sandbox="allow-forms allow-scripts allow-same-origin"
           /> 
           <ChatRoom/>    

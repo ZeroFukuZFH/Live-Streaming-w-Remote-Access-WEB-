@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { Search, UserPlus } from "lucide-react";
+import { ThemeProvider } from "next-themes";
 import { MovieLinkProvider } from "@/components/temporarySolution";
 
 const geistSans = Geist({
@@ -26,14 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
         <div className="flex flex-col justify-center items-center w-screen">
-          <MovieLinkProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <MovieLinkProvider>
             {children} 
-          </MovieLinkProvider>
+            </MovieLinkProvider>
+          </ThemeProvider>
+          
         </div>
       </body>
     </html>
