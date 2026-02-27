@@ -1,12 +1,10 @@
 "use client"
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent } from "react";
 import { useSearch } from "./custom hooks/useSearch";
 import Image from "next/image";
 import { useDetails, DetailProps } from "@/components/custom hooks/useDetails";
 import { Input } from "./ui/input";
 import { Command, CommandItem, CommandList, CommandEmpty } from "./ui/command";
-import { useRouter } from "next/navigation";
-import { MovieLinkContext } from "./temporarySolution";
 
 export function SearchBar() {
   const [search, setSearch] = useState("");
@@ -19,17 +17,6 @@ export function SearchBar() {
   const details: DetailProps | null = useDetails()
   const size = details?.images.poster_sizes[3] || 'w342'
   const base_url = details?.images.base_url || 'https://image.tmdb.org/t/p/'
-
-  // START OF TEMP SOL
-  const router = useRouter()
-  const {link,setLink} = useContext(MovieLinkContext)
-  const handleSetLink = (id:number) => {
-    setLink(`https://www.vidking.net/embed/movie/${id}?color=e50914`) 
-    console.log(link)
-    router.push("/movies/watch")
-    console.log(link)
-  }
-  //END OF TEMP SOL
 
   return (
     <div className="relative w-full max-w-80">
@@ -49,7 +36,7 @@ export function SearchBar() {
             {result?.results.map(movie => (
               <CommandItem 
                 key={movie.id} 
-                onSelect={() => handleSetLink(movie.id)} 
+                onSelect={()=>{}} 
                 className="cursor-pointer flex justify-between items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <h1 className="overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-sm">

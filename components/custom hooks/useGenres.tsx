@@ -1,28 +1,12 @@
-import { useState, useEffect } from "react"
-import { options } from "./data";
+import { useState } from "react"
+import { useFetch } from "./useFetch"
+
 
 export function useGenreList(type:string){
   const [genreList,setGenreList] = useState<{genres:GenreProps[]} | null>(null)
-  useEffect(()=>{
-    const getGenres = async () => {
-      try {
-        const url = `/genre/${type}/list?language=en`
-        const result = await fetch(process.env.NEXT_PUBLIC_BASE_URL + url,options)
-        .then(
-          res => {
-            if(!res.ok){
-              throw new Error("no list found!")
-            }
-            return res.json()
-          }
-        )
-        setGenreList(result)
-      } catch (err){
-        console.error(err)
-      }
-    }
-    getGenres()
-  },[type])
+  const url = `/genre/${type}/list?language=en`
+  
+  useFetch<{genres:GenreProps[]} | null>(url,setGenreList)
   return genreList
 }
 

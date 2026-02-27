@@ -56,11 +56,11 @@ export default function Page() {
         <div className="flex flex-wrap gap-4">
           {movies?.results.map(movie => (
             <WatchCard key={movie.id}
-                    id={movie.id}
-                    title={movie.title}
-                    poster_path={base_url + size + movie.poster_path}
-                    release_date={movie.release_date}
-                    vote_average={movie.vote_average}
+              id={movie.id}
+              title={movie.title}
+              poster_path={base_url + size + movie.poster_path}
+              release_date={movie.release_date}
+              vote_average={movie.vote_average}
             />
           ))}
         </div>

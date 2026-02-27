@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
-import { options } from "./data";
+import { options } from "./useFetch";
 
 export function useSearch(movie: string) {
   const [result, setResult] = useState<SearchProps | null>(null);
   
   useEffect(() => {
+    console.log('has rendered, useSearch')
     if (!movie.trim()) {
       setResult(null);
       return;
@@ -12,7 +13,7 @@ export function useSearch(movie: string) {
     
     const getMovies = async () => {
       try {
-        const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movie)}&include_adult=true&language=en-US&page=1`;
+        const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movie)}&include_adult=&language=en-US&page=1`;
         const response = await fetch(url, options);
         
         if (!response.ok) {

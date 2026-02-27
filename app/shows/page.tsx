@@ -15,8 +15,7 @@ export default function Page() {
 
     const details: DetailProps | null = useDetails()
     const size = details?.images.poster_sizes[3] || 'w342'
-    const base_url = details?.images.base_url || 'https://image.tmdb.org/t/p/'
-
+  const base_url = details?.images.base_url || 'https://image.tmdb.org/t/p/'
 
   const [filter,setFilter] = useState<GenreProps>({ name:"genre", id:null })
   const handleSetFilter = (genre:string, id:number | null) => {
@@ -39,8 +38,6 @@ export default function Page() {
     setPage(next => next+=1)
   }
 
-
-  
   return (
     <div className="text-white w-screen flex flex-col items-center">
       <HomeHeader />

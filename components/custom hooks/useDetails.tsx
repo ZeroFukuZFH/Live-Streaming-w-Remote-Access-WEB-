@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { options } from "./data";
+import { useState } from "react";
+import { useFetch } from "./useFetch";
 
 export interface ImagesConfig {
   base_url: string;
@@ -18,23 +18,8 @@ export interface DetailProps {
 
 export function useDetails() {
   const [details, setDetails] = useState<DetailProps | null>(null);
-  useEffect(() => {
-    const getDetails = async () => {
-      try {
-        const tmdbDetails = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "/configuration", options).then(res => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          return res.json();
-        });
-        setDetails(tmdbDetails);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    getDetails();
-  }, []);
+  const url = "/configuration"
+  useFetch<DetailProps | null>(url, setDetails)
   return details;
 }
   

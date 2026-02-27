@@ -1,51 +1,17 @@
-import { useState, useEffect } from "react"
-import { options } from "./data";
+import { useState } from "react"
+import { useFetch } from "./useFetch";
 
 export function useMoviesAll(genreID:number | null, page:number){
         const genre = genreID !== null ? `&with_genres=${genreID}` : ''
-        const url = `/discover/movie?include_adult=true&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc${genre}`
+        const url = `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc${genre}`
         const [movies,setMovies] = useState<MovieResponse | null>(null)
-        useEffect(()=>{
-            try {
-                const allMovies = async () => {
-                    const result = await fetch(process.env.NEXT_PUBLIC_BASE_URL + url, options)
-                    .then(res => {
-                        if(!res.ok){
-                            throw new Error("no data available")
-                        }
-                        return res.json()
-                    })    
-                    setMovies(result)   
-                }
-
-                allMovies()
-            } catch (err) {
-                console.error(err)
-            }
-        },[genreID,url])
+        useFetch<MovieResponse | null>(url, setMovies)
         return movies
     }
 
-export function useMovieList(movieTypeUrl : string){
+export function useMovieList(url : string){
     const [movies,setMovies] = useState<MovieResponse | null>(null)
-    useEffect(()=>{
-        const getMovies = async () => {
-            try {
-            const movieList = await fetch(movieTypeUrl,options)
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
-                    return res.json();
-                })
-            
-            setMovies(movieList)
-            } catch (err){
-                console.error(err)
-            }
-        }
-        getMovies()
-    },[movieTypeUrl])
+    useFetch<MovieResponse | null>(url, setMovies)
     return movies
 }
 
@@ -66,7 +32,7 @@ export interface MovieResponse {
 }
 
 export const movieTypes = {
-    POPULAR : "https://api.themoviedb.org/3/movie/popular",
-    TOPRATED : "https://api.themoviedb.org/3/movie/top_rated",
-    UPCOMING : process.env.NEXT_PUBLIC_BASE_URL + "/movie/upcoming"
+    POPULAR : "/movie/popular",
+    TOPRATED : "/movie/top_rated",
+    UPCOMING : "/movie/upcoming"
 }

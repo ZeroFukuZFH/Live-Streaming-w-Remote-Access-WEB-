@@ -1,8 +1,8 @@
 import Image from "next/image"
-import { useContext } from "react";
-import { MovieLinkContext } from "./temporarySolution";
-import { useRouter } from "next/navigation";
+
 import { HoverCard,HoverCardContent,HoverCardTrigger } from "@/components/ui/hover-card"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface WatchCardProps {
     id:number;
@@ -20,27 +20,16 @@ export function WatchCard({
     vote_average,
 }:WatchCardProps){
 
-    // START OF TEMP SOL
-    const router = useRouter()
-    const {link,setLink} = useContext(MovieLinkContext)
-    const handleSetLink = (id:number) => {
-        setLink(`https://www.vidking.net/embed/movie/${id}?color=e50914`) 
-        console.log(link)
-        if(link !== '/'){
-            router.push("/movies/watch")
-        }
-        console.log(link)
-    }
-    //END OF TEMP SOL
+    const param = usePathname()
 
     return (
         <HoverCard>
-            <HoverCardTrigger>
-                <button onClick={()=>handleSetLink(id)} className="cursor-pointer">
+            <HoverCardTrigger asChild>
+                <Link href={param + '/' + id}>
                     <div className="flex flex-col w-56">
                     <Image src={poster_path} alt="movie image" className="flex 3" width={300} height={450}/>
                     </div>
-                </button>
+                </Link>
             </HoverCardTrigger>
             <HoverCardContent side="right">
                 <h1>{title}</h1>
